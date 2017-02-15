@@ -27,3 +27,6 @@
 *.exe
 *.out
 *.app
+
+# In tree build directory
+build/*
