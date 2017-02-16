@@ -14,8 +14,8 @@ int main(int argc, char** argv){
     
     std::istringstream str(line);
     std::string word;
-    
-    while( str >> line ) {
+        
+    while( str >> word ) {
       words.push_back(word);
     }
       
