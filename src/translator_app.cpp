@@ -1,13 +1,15 @@
 #include <string>
 #include <iostream>
+#include "Translator.hpp"
 
 int main(int argc, char** argv){
 
-    std::string a;
+    Translator translator;
+    std::string input;
 
-    std::cin >> a;
+    std::cin >> input;
 
-    std::cout << a << '\n';
+    std::cout << translator.translate(input) << '\n';
 
     return 0;
 }
