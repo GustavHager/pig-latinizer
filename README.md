@@ -7,5 +7,7 @@ mkdir build && cd build && cmake .. && make
 
 Project memebers:
 Gustav Häger
+
 Mattias Tiger
+
 Martin Danelljan
