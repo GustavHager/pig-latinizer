@@ -1,13 +1,53 @@
 #include "gtest/gtest.h"
 
 #include "Translator.hpp"
+#include <iostream>
+
+
+TEST (SingleLetterWords,ConsonantTest){
+  Translator t;
+  std::string wasp(t.translate("wasp"));
+
+  EXPECT_EQ("aspway", wasp);
+}
+
+TEST (SingleLetterWords,YletterTest){
+  Translator t;
+  std::string yellow(t.translate("yellow"));
+
+  EXPECT_EQ("ellowyay", yellow);
+}
+
+TEST (SingleLetterWords,WovelTest){
+  Translator t;
+  std::string angle(t.translate("angle"));
+
+  EXPECT_EQ("angleway", angle);
+}
+
+TEST (EmptyWord,Emptyword){
+  Translator t;
+  std::string empty(t.translate(""));
+
+  EXPECT_EQ("",empty);
+}
+
+TEST (NoWovelWord,NoWovels){
+  Translator t;
+  std::string phd(t.translate("phd"));
+
+  EXPECT_EQ("phday", phd);
+} 
+
+/*
+Commented oink test since segfaulted
 
 TEST (OinkTest, oink){
   Translator t;
-  
+ 
   EXPECT_EQ("Oink",t.translate("word"));
 }
-
+*/
 
 
 int main(int argc, char** argv){
