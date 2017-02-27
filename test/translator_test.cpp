@@ -18,7 +18,7 @@ TEST (SingleLetterWords,YletterTest){
   EXPECT_EQ("ellowyay", yellow);
 }
 
-TEST (SingleLetterWords,WovelTest){
+TEST (SingleLetterWords,VowelTest){
   Translator t;
   std::string angle(t.translate("angle"));
 
@@ -32,11 +32,11 @@ TEST (EmptyWord,Emptyword){
   EXPECT_EQ("",empty);
 }
 
-TEST (NoWovelWord,NoWovels){
+TEST (NoVowelsWord,NoVowels){
   Translator t;
-  std::string phd(t.translate("phd"));
+  std::string PhD(t.translate("PhD"));
 
-  EXPECT_EQ("phday", phd);
+  EXPECT_EQ("PhDay", PhD);
 } 
 
 /*
