@@ -11,11 +11,19 @@ git submodule update
 To build:
 mkdir build && cd build && cmake .. && make
 
+To run: (under build)
+./translator
+
+To test: (under build)
+./translator_test
+
+
 Dependencies:
 Google test (gtest)
 
 
-Project memebers:
+Project members:
 * Gustav Häger
 * Mattias Tiger
 * Martin Danelljan
+* Bertil Grelsson

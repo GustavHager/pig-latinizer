@@ -28,7 +28,7 @@ std::string Translator::translate(const std::string& text) const{
   } while( textIndex < text.size() && vowelIndex < 0 );
   
   if( textIndex == text.size() ) {
-    return text;  // No translation was possible, the word do not contain any vowels
+    return text + "ay";  // The word does not contain any vowels
   }
   
   return text.substr(textIndex-1) + text.substr(0,textIndex-1) + "ay";  
