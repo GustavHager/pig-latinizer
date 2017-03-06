@@ -32,7 +32,8 @@ int main(int argc, char** argv){
 
     Translator translator;
     std::vector<std::string> words;
-    
+
+    // Read words from input
     std::string line;
     getline(std::cin, line);
     
@@ -43,11 +44,18 @@ int main(int argc, char** argv){
       words.push_back(word);
     }
       
+    // Translate all words in input
+    std::vector<std::string> translations(words.size());
+    for(int n = 0; n < words.size(); n++) {
+        translations[n] = translator.translate(words[n]);;
+    }
+
+    // Output the result
     for(int n = 0; n < words.size()-1; n++) {
-        std::cout << translator.translate(words[n]) << " ";
+        std::cout << translations[n] << " ";
     }
     if (!words.empty()) {
-        std::cout << translator.translate(words.back());
+        std::cout << translations.back();
     }
     std::cout << '\n';
 
