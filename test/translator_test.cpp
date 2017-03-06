@@ -39,6 +39,19 @@ TEST (NoVowelsWord,NoVowels){
   EXPECT_EQ("PhDay", PhD);
 } 
 
+TEST (CapitalLetterWord,CapitalLetter){
+  Translator t;
+  std::string Latin(t.translate("Latin"));
+  std::string ABC(t.translate("ABC"));
+  std::string TIME(t.translate("TIME"));
+  std::string TiMe(t.translate("TiMe"));
+
+  EXPECT_EQ("Atinlay", Latin);
+  EXPECT_EQ("ABCway", ABC);
+  EXPECT_EQ("IMETay", TIME);
+  EXPECT_EQ("IMetay", TiMe);
+} 
+
 /*
 Commented oink test since segfaulted
 

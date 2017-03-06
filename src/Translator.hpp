@@ -14,4 +14,11 @@ class Translator{
         std::string vowels;
 };
 
+std::string to_lower_case(std::string str);
+std::string to_upper_case(std::string str);
+char to_lower_case(char letter);
+char to_upper_case(char letter);
+bool is_upper_case(char letter);
+bool is_all_upper_case(std::string str);
+
 #endif
