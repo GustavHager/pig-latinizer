@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include <future>
 #include "Translator.hpp"
 #include "CommandParser.hpp"
 
@@ -36,6 +37,7 @@ int main(int argc, char** argv){
     // Read words from input
     std::string line;
     getline(std::cin, line);
+    //line = "asdf fgh";
     
     std::istringstream str(line);
     std::string word;
@@ -43,11 +45,22 @@ int main(int argc, char** argv){
     while( str >> word ) {
       words.push_back(word);
     }
+
+    std::vector<std::string> translations;
+    translations.reserve(words.size());
       
-    // Translate all words in input
-    std::vector<std::string> translations(words.size());
-    for(int n = 0; n < words.size(); n++) {
-        translations[n] = translator.translate(words[n]);
+    // Translate all words in input, serial
+    //for(int n = 0; n < words.size(); n++) {
+    //    translations.push_back(translator.translate(words[n]));
+    //}
+
+    // Translate all words in input, parallel
+    std::vector<std::future<std::string> > future_translations;
+    for (auto& w : words) {
+        future_translations.push_back(std::async([&](std::string word) {return translator.translate(word);}, w));
+    }
+    for (auto& ft : future_translations) {
+        translations.push_back(ft.get());
     }
 
     // Output the result
