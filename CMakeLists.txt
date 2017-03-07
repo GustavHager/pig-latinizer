@@ -11,10 +11,13 @@ find_package(Threads)
 
 SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -pthread" )
 
+ADD_EXECUTABLE(inverse_translator src/inv_translator_app.cpp src/InverseTranslator.cpp src/Translator.cpp)
+
 ADD_EXECUTABLE(translator src/translator_app.cpp src/Translator.cpp)
 target_compile_features(translator PRIVATE cxx_range_for)
 TARGET_LINK_LIBRARIES(translator ${CMAKE_THREAD_LIBS_INIT})
 
-ADD_EXECUTABLE(translator_test test/translator_test.cpp src/Translator.cpp)
+ADD_EXECUTABLE(translator_test test/translator_test.cpp src/Translator.cpp src/InverseTranslator.cpp)
 target_compile_features(translator_test PRIVATE cxx_range_for)
 TARGET_LINK_LIBRARIES(translator_test ${CMAKE_THREAD_LIBS_INIT} gtest gtest_main)
+
