@@ -11,7 +11,11 @@ class Translator{
         Translator();
         std::string translate(const std::string& text) const;
     private:
+        std::string translate_word(const std::string& text) const;
+        std::vector<std::string> separate_punctuation(const std::string& text) const;
+        bool is_punctuation(char c) const;
         std::string vowels;
+        std::string punctuation;
 };
 
 std::string to_lower_case(std::string str);

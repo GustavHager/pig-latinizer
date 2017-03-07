@@ -47,7 +47,7 @@ int main(int argc, char** argv){
     // Translate all words in input
     std::vector<std::string> translations(words.size());
     for(int n = 0; n < words.size(); n++) {
-        translations[n] = translator.translate(words[n]);;
+        translations[n] = translator.translate(words[n]);
     }
 
     // Output the result
