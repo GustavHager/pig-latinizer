@@ -31,7 +31,7 @@ int main(int argc, char** argv){
                              0);*/
 
     // Parse command line arguments
-    bool success = command.parse(argc,argv);    
+    bool success = command.parse(argc,argv);   
     if(!success) {
       std::cout << command.parseErrorsToString() << "\n";
       return 0;
@@ -102,24 +102,26 @@ int main(int argc, char** argv){
     }
 
     // Output the result
-    if(command.isset("--file-output")) {
-      // Write to file
-      std::ofstream outputFile;
-      outputFile.open(command.get<std::string>("--file-output"));
-      AssertM(outputFile.is_open(), "Could not open file.");
-      for (auto& word : translations) {
-        outputFile << word << " ";
+    if(!translations.empty()) {
+      if(command.isset("--file-output")) {
+        // Write to file
+        std::ofstream outputFile;
+        outputFile.open(command.get<std::string>("--file-output"));
+        AssertM(outputFile.is_open(), "Could not open file.");
+        for (auto& word : translations) {
+          outputFile << word << " ";
+        }
+        outputFile.close();
+      } else {
+        // Write to standard output
+        for(int n = 0; n < translations.size()-1; n++) {
+            std::cout << translations[n] << " ";
+        }
+        if (!translations.empty()) {
+            std::cout << translations.back();
+        }
+        std::cout << '\n';
       }
-      outputFile.close();
-    } else {
-      // Write to standard output
-      for(int n = 0; n < words.size()-1; n++) {
-          std::cout << translations[n] << " ";
-      }
-      if (!words.empty()) {
-          std::cout << translations.back();
-      }
-      std::cout << '\n';
     }
 
     return 0;
