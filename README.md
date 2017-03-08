@@ -22,13 +22,15 @@ mkdir build && cd build && cmake .. && make
 ## To run translator: (under build)
 ./translator and enter the text to be translated
 ``` bash
-Usage: translator [options]
+Usage: translator [options] 
   -h, --help          Display this help text and exit. 
   -p, --parallel      Translate the words in parallel using one thread for each 
                       word. 
   -i, --inverse       Translate the words from pig-latin to english. 
   -f, --file-input    Use the file from the provided path as input. 
   -o, --file-output   Write result to specified path. 
+  -g, --graphical-user-interface
+                      Start the GUI of the translator. 
 ```
 
 ## To run inverse translator: (under build)
