@@ -2,10 +2,17 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.1.0 FATAL_ERROR)
 
 PROJECT(translator CXX)
 
+SET(CMAKE_CXX_STANDARD 11)
+
 ADD_SUBDIRECTORY(gtest)
 ENABLE_TESTING()
 INCLUDE_DIRECTORIES(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 INCLUDE_DIRECTORIES(./include)
+
+ADD_SUBDIRECTORY(./dependencies/image_captioning)
+
+FIND_PACKAGE(Caffe REQUIRED)
+INCLUDE_DIRECTORIES(${Caffe_INCLUDE_DIRS})
 
 ADD_SUBDIRECTORY(src/CLP)
 INCLUDE_DIRECTORIES(src/CLP)
@@ -14,16 +21,12 @@ find_package(Threads)
 
 SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -pthread" )
 
-ADD_EXECUTABLE(inverse_translator src/inv_translator_app.cpp src/InverseTranslator.cpp src/PigLatinTranslator.cpp)
-SET_PROPERTY(TARGET inverse_translator PROPERTY CXX_STANDARD 11)
+ADD_EXECUTABLE(inverse_translator src/inv_translator_app.cpp src/InverseTranslator.cpp src/PigLatinTranslator.cpp src/ImageTranslator.cpp)
 
 ADD_EXECUTABLE(translator src/translator_app.cpp src/PigLatinTranslator.cpp src/InverseTranslator.cpp src/TranslatorGUI.cpp)
-SET_PROPERTY(TARGET translator PROPERTY CXX_STANDARD 11)
-SET_PROPERTY(TARGET translator PROPERTY CXX_STANDARD 11)
 TARGET_LINK_LIBRARIES(translator CLP)
 TARGET_LINK_LIBRARIES(translator ${CMAKE_THREAD_LIBS_INIT})
-target_compile_features(CLP PRIVATE cxx_range_for)
-target_compile_features(translator PRIVATE cxx_range_for)
+TARGET_LINK_LIBRARIES(translator caffe)
 
 # Find and link to SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
