@@ -50,7 +50,7 @@ std::string PigLatinTranslator::translate_word(const std::string& word) const{
   } while( translationIndex < translation.size() && vowelIndex < 0 );
 
   // If The word does not contain any vowels
-  if( translationIndex == translation.size() ) {
+  if( translationIndex == translation.size() && vowelIndex < 0 ) {
     if( isCapitalFirst && !is_upper_case(translation[0]) ) {
       translation[0] = to_upper_case(translation[0]);
     }
