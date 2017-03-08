@@ -1,6 +1,16 @@
 # pig-latinizer
 For the software development phd-course. An application to turn proper english into pig-latin and the reverse.
 
+``` bash
+Usage: translator [options]
+  -h, --help          Display this help text and exit. 
+  -p, --parallel      Translate the words in parallel using one thread for each 
+                      word. 
+  -i, --inverse       Translate the words from pig-latin to english. 
+  -f, --file-input    Use the file from the provided path as input. 
+  -o, --file-output   Write result to specified path. 
+```
+  
 To download:
 git clone git@github.com:GustavHager/pig-latinizer.git
 cd pig-latinizer
