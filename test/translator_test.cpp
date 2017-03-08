@@ -4,6 +4,18 @@
 #include "InverseTranslator.hpp"
 #include <iostream>
 
+TEST (InverseCapitalWord,FirstCapital){
+  InverseTranslator t;
+  std::string Elphay(t.translate("Elphay"));
+  EXPECT_EQ("Help", Elphay);
+}
+
+TEST (InverseCapitalWord,AllCapitals){
+  InverseTranslator t;
+  std::string ELPHay(t.translate("ELPHay"));
+  EXPECT_EQ("HELP", ELPHay);
+}
+
 TEST (InverseLetterWord,Vowelword){
   InverseTranslator t;
   std::string eggway(t.translate("eggway"));
@@ -26,7 +38,31 @@ TEST (InversePunctuationWord,ConsonantWord){
   InverseTranslator t;
   std::string elphay(t.translate("elphay!"));
   EXPECT_EQ("help!", elphay);
-}     
+}
+
+TEST (InverseShortWord,ConsonantWord){
+  InverseTranslator t;
+  std::string ebay(t.translate("ebay"));
+  EXPECT_EQ("be", ebay);
+}
+
+TEST (InverseShortWord,VowelWord){
+  InverseTranslator t;
+  std::string isway(t.translate("isway"));
+  EXPECT_EQ("is", isway);
+}
+
+TEST (ShortLetterWords,ConsonantTest){
+  PigLatinTranslator t;
+  std::string be(t.translate("be"));
+  EXPECT_EQ("ebay", be);
+} 
+
+TEST (ShortLetterWords,VowelTest){
+  PigLatinTranslator t;
+  std::string is(t.translate("is"));
+  EXPECT_EQ("isway", is);
+}             
 
 TEST (SingleLetterWords,ConsonantTest){
   PigLatinTranslator t;
@@ -57,6 +93,13 @@ TEST (NoVowelsWord,NoVowels){
   std::string PhD(t.translate("PhD"));
   EXPECT_EQ("PhDay", PhD);
 } 
+
+TEST (VowelEndWords,ConsonantTest){
+  PigLatinTranslator t;
+  std::string be(t.translate("be"));
+  EXPECT_EQ("ebay", be);
+} 
+
 
 TEST (CapitalLetterWord,CapitalLetter){
   PigLatinTranslator t;
