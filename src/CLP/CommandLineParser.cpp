@@ -17,7 +17,7 @@ void CommandLineParser::setProgramDescription(std::string programDescription) {
 
 void CommandLineParser::addArgument(std::string argNameShort, std::string argNameLong, std::string description,  Option option) {
   bool hasParameter = option != NO_PARAMETER;
-  arguments.push_back(CommandLineArgument(argNameShort, argNameLong, description, (size_t)&argument_parser<std::string>, hasParameter));
+  arguments.push_back(CommandLineArgument(argNameShort, argNameLong, description, argument_parser_identifier<std::string>(), hasParameter));
   int n = arguments.size()-1;
   nameLookUp[argNameShort] = n;
   nameLookUp[argNameLong] = n;

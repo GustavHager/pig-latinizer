@@ -15,10 +15,14 @@ find_package(Threads)
 SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -pthread" )
 
 ADD_EXECUTABLE(inverse_translator src/inv_translator_app.cpp src/InverseTranslator.cpp src/PigLatinTranslator.cpp)
+SET_PROPERTY(TARGET inverse_translator PROPERTY CXX_STANDARD 11)
 
 ADD_EXECUTABLE(translator src/translator_app.cpp src/PigLatinTranslator.cpp src/InverseTranslator.cpp src/TranslatorGUI.cpp)
+SET_PROPERTY(TARGET translator PROPERTY CXX_STANDARD 11)
+SET_PROPERTY(TARGET translator PROPERTY CXX_STANDARD 11)
 TARGET_LINK_LIBRARIES(translator CLP)
 TARGET_LINK_LIBRARIES(translator ${CMAKE_THREAD_LIBS_INIT})
+target_compile_features(CLP PRIVATE cxx_range_for)
 target_compile_features(translator PRIVATE cxx_range_for)
 
 # Find and link to SFML
@@ -40,7 +44,9 @@ else()
 endif()
 
 ADD_EXECUTABLE(translator_test test/translator_test.cpp src/PigLatinTranslator.cpp src/InverseTranslator.cpp)
-target_compile_features(translator_test PRIVATE cxx_range_for)
+SET_PROPERTY(TARGET translator_test PROPERTY CXX_STANDARD 11)
+
+#target_compile_features(translator_test PRIVATE cxx_range_for)
 TARGET_LINK_LIBRARIES(translator_test ${CMAKE_THREAD_LIBS_INIT} gtest gtest_main)
 
 file(COPY resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

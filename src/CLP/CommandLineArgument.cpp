@@ -8,7 +8,7 @@
 namespace CLP {
 
 CommandLineArgument::CommandLineArgument(std::string shortName, std::string longName, 
-                                         std::string description, size_t parserIdentifier, 
+                                         std::string description, std::uintptr_t parserIdentifier, 
                                          bool hasValue) {
   this->shortName = shortName;
   this->longName = longName;
@@ -37,7 +37,7 @@ std::string CommandLineArgument::getDescription() const {
   return description;
 
 }
-int CommandLineArgument::getParserIdentifier() const {
+std::uintptr_t CommandLineArgument::getParserIdentifier() const {
   return parserIdentifier;
 }
 
