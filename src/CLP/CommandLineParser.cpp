@@ -115,6 +115,7 @@ std::string CommandLineParser::helpToString() {
     ss << ss_.str();
     // Add description
     if(namesLength > Wspace+Wname) {
+      ss << "\n";
       ss << wrapText(arguments[n].getDescription(), Wtot, Wspace+Wname) << "\n";
     } else {
       ss << wrapText(arguments[n].getDescription(), Wtot, Wspace+Wname, true) << "\n";
