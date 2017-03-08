@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <map>
+#include <cstdint>
 
 #include "InformativeAssert.hpp"
 #include "helper_functions.hpp"
@@ -28,7 +29,7 @@ class CommandLineArgument {
     CommandLineArgument() {}
 
     CommandLineArgument(std::string shortName, std::string longName, 
-			                  std::string description, size_t parserIdentifier, 
+			                  std::string description, std::uintptr_t parserIdentifier, 
 			                  bool hasValue = true);
 
     bool isset() const;
@@ -47,7 +48,7 @@ class CommandLineArgument {
 
     std::string getDescription() const;
 
-    int getParserIdentifier() const;
+    std::uintptr_t getParserIdentifier() const;
 
     template <class T> 
     T getValue() const;
@@ -63,12 +64,12 @@ class CommandLineArgument {
 
     std::string generateParseErrorMessage(std::string type) const;
 
-  private:
+  //private:
     std::string shortName, longName;
     std::string description;
     std::string value;
     std::string defaultValue;
-    size_t parserIdentifier;
+    std::uintptr_t parserIdentifier;
     bool hasValue;
 };
 
@@ -77,7 +78,7 @@ template <class T>
 T parse_argument(const CommandLineArgument & argument);
 
 template <class T>
-size_t  argument_parser_identifier();
+std::uintptr_t argument_parser_identifier();
 
 // TODO: Extend AssertM for lazy evaluation of a message-generating function.
 #define ASSERT_ARGUMENT(expression,T,argument)\
@@ -105,19 +106,20 @@ void CommandLineArgument::setDefaultValue(T value) {
 /* -------------------------------------------- */
 
 template <class T>
-size_t  argument_parser_identifier() {
+std::uintptr_t argument_parser_identifier() {
   T (*fn)(const CommandLineArgument & argument) = &argument_parser<T>;
-  return (size_t)fn;
+  return (std::uintptr_t)fn;
 }
 
 template <class T>
 T parse_argument(const CommandLineArgument & argument) {  
+
   AssertM(argument.isset() || argument.hasDefault(), 
           "Argument '" << argument.getShortName() << "'/'" << 
           argument.getLongName() << "' is not set and has no default value.");
   if(argument.isset()) {
     AssertM(argument.getParserIdentifier() == argument_parser_identifier<T>(),
-            "Cannot parse argument to type '" << TO_STRING(T) << "', wrong type.");
+            "Cannot parse argument to type '" << TO_STRING(T) << "', wrong type. Adress was: " << argument.getParserIdentifier() << " Looked at " << argument_parser_identifier<T>());
     return argument_parser<T>(argument);
   } else {  // argument.hasDefaultValue() == true
     return deserialize<T>(argument.getDefaultValueString());
