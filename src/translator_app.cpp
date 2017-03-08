@@ -112,6 +112,7 @@ int main(int argc, char** argv){
       }
       outputFile.close();
     } else {
+      // Write to standard output
       for(int n = 0; n < words.size()-1; n++) {
           std::cout << translations[n] << " ";
       }
