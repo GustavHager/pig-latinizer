@@ -64,7 +64,7 @@ class CommandLineArgument {
 
     std::string generateParseErrorMessage(std::string type) const;
 
-  //private:
+  private:
     std::string shortName, longName;
     std::string description;
     std::string value;
@@ -119,7 +119,7 @@ T parse_argument(const CommandLineArgument & argument) {
           argument.getLongName() << "' is not set and has no default value.");
   if(argument.isset()) {
     AssertM(argument.getParserIdentifier() == argument_parser_identifier<T>(),
-            "Cannot parse argument to type '" << TO_STRING(T) << "', wrong type. Adress was: " << argument.getParserIdentifier() << " Looked at " << argument_parser_identifier<T>());
+            "Cannot parse argument to type '" << TO_STRING(T) << "', wrong type.");
     return argument_parser<T>(argument);
   } else {  // argument.hasDefaultValue() == true
     return deserialize<T>(argument.getDefaultValueString());
