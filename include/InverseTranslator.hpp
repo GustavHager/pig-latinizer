@@ -12,6 +12,7 @@ class InverseTranslator : public Translator {
     public:
         InverseTranslator();
         std::string translate(const std::string& text) const;
+        std::string getName() const { return "Pig-Latin->English"; }
     private:
         std::string vowels;
 };

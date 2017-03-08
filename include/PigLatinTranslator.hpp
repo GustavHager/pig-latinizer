@@ -11,6 +11,7 @@ class PigLatinTranslator : public Translator {
     public:
         PigLatinTranslator();
         std::string translate(const std::string& text) const;
+        std::string getName() const { return "English->Pig-Latin"; }
     private:
         std::string translate_word(const std::string& text) const;
         std::vector<std::string> separate_punctuation(const std::string& text) const;

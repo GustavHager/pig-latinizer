@@ -14,6 +14,12 @@ class TranslatorGUI {
     void run();
   private:
     Translator * activeTranslator;
+    tgui::EditBox::Ptr editBox;
+    tgui::ChatBox::Ptr chatbox;
+    bool isEvenColor;
+
+    void translateInput();
+
 };
 
 #endif
