@@ -10,6 +10,7 @@ InverseTranslator::InverseTranslator(){
 std::string InverseTranslator::InverseTranslate(const std::string& text) const{
 
   if( text.empty() ) {
+    std::cout << "Returning empty word\n";
     return "";
   } 
 
@@ -22,14 +23,10 @@ std::string InverseTranslator::InverseTranslate(const std::string& text) const{
   if (is_punct_mark_end(text)) {
     word = text.substr(0,textLength-1);
     end = text.substr(textLength-1);
-    //std::cout << word << '\n';
-    //std::cout << end << '\n';
   }
   else {
     word = text;
     end = "";
-    //std::cout << word << '\n';
-    //std::cout << end << '\n';
   }
 
   //Check that word ends with "ay", otherwise return word as is
@@ -85,8 +82,18 @@ std::string InverseTranslator::InverseTranslate(const std::string& text) const{
     }
 
     if(match == 0) {
-      return stem.substr(letter_index, stem_size-letter_index) + 
-        stem.substr(0,letter_index) + end;
+      bool isCapitalFirst = is_upper_case(stem[0]);
+      bool isAllCapitals = is_all_upper_case(stem);
+      std::string translation;
+      if(isCapitalFirst && !isAllCapitals) {
+	stem[0] = to_lower_case(stem[0]);
+      }
+      translation = stem.substr(letter_index, stem_size-letter_index) + 
+        stem.substr(0,letter_index);
+      if(isCapitalFirst && !isAllCapitals) {
+	translation[0] = to_upper_case(translation[0]);
+      }      
+      return translation + end;
     }
     else {
       return stem + end;
@@ -123,4 +130,3 @@ bool is_last_3_way(std::string str) {
     return (end.compare("way") == 0);
   }
 }
-

@@ -18,6 +18,4 @@ bool is_punct_mark_end(std::string str);
 bool is_last_2_ay(std::string str);
 bool is_last_3_way(std::string str);
 
-
-
 #endif
