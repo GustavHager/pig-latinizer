@@ -7,6 +7,7 @@
 #include "PigLatinTranslator.hpp"
 #include "InverseTranslator.hpp"
 #include "CLP/CLP.hpp"
+#include "TranslatorGUI.hpp"
 
 int main(int argc, char** argv){
 
@@ -25,6 +26,9 @@ int main(int argc, char** argv){
                         "Use the file from the provided path as input.");
     command.addArgument("-o", "--file-output",
                         "Write result to specified path.");
+    command.addArgument("-g", "--graphical-user-interface",
+                        "Start the GUI of the translator.",
+                        CLP::CommandLineParser::NO_PARAMETER);
     /*
     command.addArgument<int>("-s", "--space-padding",
                              "Pads each word with spaces at the end so that it is at least NUM characters long.",
@@ -48,7 +52,9 @@ int main(int argc, char** argv){
       std::cout << "Padding is set to: " << command.get<int>("--padding") << " (using default value)\n";
     }
     */
+
     
+   
     // Select translator (Pig Latin or Inverse Pig latin)
     std::vector<std::string> words;
     Translator * translator;
@@ -56,6 +62,15 @@ int main(int argc, char** argv){
       translator = new InverseTranslator();
     } else {
       translator = new PigLatinTranslator();
+    }
+
+    // Start the GUI application
+    // Currently overrides all other command line arguments except "-g" and "-i"
+    if(command.isset("-g")) {
+      TranslatorGUI gui;
+      gui.setTranslator(translator);
+      gui.run();
+      return 0;
     }
 
     // Read words from input
