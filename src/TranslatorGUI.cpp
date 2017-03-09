@@ -12,7 +12,29 @@ void TranslatorGUI::setTranslator(Translator * translator) {
 void TranslatorGUI::translateInput() {
   std::string text = editBox->getText();
   editBox->setText("");
-  std::string translatedText = activeTranslator->translate(text);
+
+  // Split the text into words
+  std::vector<std::string> words;
+  std::stringstream ss(text);
+  std::string word;
+  while(getline(ss, word, ' ')) {
+    words.push_back(word);
+  }
+  if(words.empty()) {
+    return;
+  }
+    
+  // Translate words
+  std::vector<std::string> translatedWords(words.size());
+  for(int n = 0; n < words.size(); n++) {
+    translatedWords[n] = activeTranslator->translate(words[n]);
+  }
+  std::string translatedText = translatedWords[0];
+  for(int n = 1; n < words.size(); n++) {
+     translatedText += std::string(" ") + translatedWords[n];
+  }
+
+  // Update GUI widget
   sf::Color textColor;
   if(isEvenColor) {
     textColor = sf::Color(230,230,230,255);
