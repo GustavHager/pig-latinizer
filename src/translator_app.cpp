@@ -7,7 +7,10 @@
 #include "PigLatinTranslator.hpp"
 #include "InverseTranslator.hpp"
 #include "CLP/CLP.hpp"
+
+#ifdef ENABLE_GRAPHICS	// Is set by cmake/make, see README.md for use
 #include "TranslatorGUI.hpp"
+#endif
 
 int main(int argc, char** argv){
 
@@ -26,9 +29,11 @@ int main(int argc, char** argv){
                         "Use the file from the provided path as input.");
     command.addArgument("-o", "--file-output",
                         "Write result to specified path.");
+#ifdef ENABLE_GRAPHICS	// Is set by cmake/make, see README.md for use
     command.addArgument("-g", "--graphical-user-interface",
                         "Start the GUI of the translator.",
                         CLP::CommandLineParser::NO_PARAMETER);
+#endif
     /*
     command.addArgument<int>("-s", "--space-padding",
                              "Pads each word with spaces at the end so that it is at least NUM characters long.",
@@ -64,6 +69,7 @@ int main(int argc, char** argv){
       translator = new PigLatinTranslator();
     }
 
+#ifdef ENABLE_GRAPHICS	// Is set by cmake/make, see README.md for use
     // Start the GUI application
     // Currently overrides all other command line arguments except "-g" and "-i"
     if(command.isset("-g")) {
@@ -72,6 +78,7 @@ int main(int argc, char** argv){
       gui.run();
       return 0;
     }
+#endif
 
     // Read words from input
     std::string word;

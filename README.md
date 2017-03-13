@@ -8,6 +8,10 @@ git submodule init
 git submodule update
 
 ## Required libraries: SFML, TGUI
+* SFML: 2.3 or greater
+* TGUI: 0.7.3
+
+The dependencies can be installed on Ubuntu 16.04 by
 ``` bash
 sudo apt-get install libsfml-dev
 
@@ -15,6 +19,7 @@ sudo add-apt-repository ppa:texus/tgui
 sudo apt-get update
 sudo apt-get install libtgui-dev
 ```
+The graphics components will not be built if one of these (SFML,TGUI) are not found.
 
 ## To build:
 mkdir build && cd build && cmake .. && make

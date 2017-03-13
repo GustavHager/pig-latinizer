@@ -13,41 +13,50 @@ INCLUDE_DIRECTORIES(src/CLP)
 find_package(Threads)
 
 SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -pthread" )
-
-ADD_EXECUTABLE(inverse_translator src/inv_translator_app.cpp src/InverseTranslator.cpp src/PigLatinTranslator.cpp)
-SET_PROPERTY(TARGET inverse_translator PROPERTY CXX_STANDARD 11)
-
-ADD_EXECUTABLE(translator src/translator_app.cpp src/PigLatinTranslator.cpp src/InverseTranslator.cpp src/TranslatorGUI.cpp)
-SET_PROPERTY(TARGET translator PROPERTY CXX_STANDARD 11)
-SET_PROPERTY(TARGET translator PROPERTY CXX_STANDARD 11)
-TARGET_LINK_LIBRARIES(translator CLP)
-TARGET_LINK_LIBRARIES(translator ${CMAKE_THREAD_LIBS_INIT})
-target_compile_features(CLP PRIVATE cxx_range_for)
-target_compile_features(translator PRIVATE cxx_range_for)
+set(ENABLE_GRAPHICS TRUE)
 
 # Find and link to SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
-find_package(SFML 2 REQUIRED system window graphics network audio)
+find_package(SFML 2.3 REQUIRED system window graphics network audio)
 if(SFML_FOUND)
-  include_directories(${SFML_INCLUDE_DIR})
-  target_link_libraries(translator ${SFML_LIBRARIES})
 else()
   message (WARNING "Did not find SFML")
+  set(ENABLE_GRAPHICS FALSE)
 endif()
 # Find and link to TGUI (SFML GUI)
-find_package(TGUI REQUIRED)
+find_package(TGUI 0.7.3 REQUIRED)
 if(TGUI_FOUND)
+else()
+  message (WARNING "Did not find TGUI")
+  set(ENABLE_GRAPHICS FALSE)
+endif()
+
+# Translator app
+if(ENABLE_GRAPHICS)
+  ADD_EXECUTABLE(translator src/translator_app.cpp src/PigLatinTranslator.cpp src/InverseTranslator.cpp src/TranslatorGUI.cpp)
+  add_definitions(-DENABLE_GRAPHICS)
+  include_directories(${SFML_INCLUDE_DIR})
+  target_link_libraries(translator ${SFML_LIBRARIES})
   include_directories(${TGUI_INCLUDE_DIR})
   target_link_libraries(translator ${TGUI_LIBRARY})
 else()
-  message (WARNING "Did not find TGUI")
+  message (WARNING "One or more graphical components were not found. Graphics will be disabled.")
+  ADD_EXECUTABLE(translator src/translator_app.cpp src/PigLatinTranslator.cpp src/InverseTranslator.cpp)
 endif()
+SET_PROPERTY(TARGET translator PROPERTY CXX_STANDARD 11)
+TARGET_LINK_LIBRARIES(translator CLP ${CMAKE_THREAD_LIBS_INIT})
+target_compile_features(CLP PRIVATE cxx_range_for)
+target_compile_features(translator PRIVATE cxx_range_for)
 
+# TODO: remove
+ADD_EXECUTABLE(inverse_translator src/inv_translator_app.cpp src/InverseTranslator.cpp src/PigLatinTranslator.cpp)
+SET_PROPERTY(TARGET inverse_translator PROPERTY CXX_STANDARD 11)
+
+# Tests
 ADD_EXECUTABLE(translator_test test/translator_test.cpp src/PigLatinTranslator.cpp src/InverseTranslator.cpp)
 SET_PROPERTY(TARGET translator_test PROPERTY CXX_STANDARD 11)
-
-#target_compile_features(translator_test PRIVATE cxx_range_for)
 TARGET_LINK_LIBRARIES(translator_test ${CMAKE_THREAD_LIBS_INIT} gtest gtest_main)
 
+# Copy resource files to build map
 file(COPY resources DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
