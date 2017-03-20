@@ -1,10 +1,4 @@
-addon:
-    apt:
-        packages:
-            - cmake
-            - cmake-data
-        sources:
-            - george-edison55-precise-backports
+dist: xenial
 
 language: c++
 
