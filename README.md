@@ -45,7 +45,8 @@ Usage: translator [options]
 ./translator_test
 
 ## Dependencies:
-Google test (gtest)
+Google test (this is included as a subrepository)
+SFML (for graphics)
 
 ## Project members:
 * Gustav Häger
