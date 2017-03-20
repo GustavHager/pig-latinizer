@@ -12,23 +12,26 @@ INCLUDE_DIRECTORIES(src/CLP)
 
 find_package(Threads)
 
-SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -pthread" )
-set(ENABLE_GRAPHICS TRUE)
+#SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -pthread" )
 
 # Find and link to SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 find_package(SFML 2.3)
-if(SFML_FOUND)
-find_package(SFML 2.3 REQUIRED system window graphics network audio)
-else()
-  message (WARNING "Did not find SFML")
-  set(ENABLE_GRAPHICS FALSE)
-endif()
-# Find and link to TGUI (SFML GUI)
 find_package(TGUI 0.7.3)
-if(TGUI_FOUND)
+
+if(SFML_FOUND AND TGUI_FOUND)
+  find_package(SFML 2.3 REQUIRED system window graphics network audio)
+  SET( ENABLE_GRAPHICS TRUE ) 
 else()
-  message (WARNING "Did not find TGUI")
+  if(NOT SFML_FOUND)
+      message (WARNING "Did not find SFML")
+  endif()
+
+  if(NOT TGUI_FOUND)
+      message(WARNING "Did not find TGUI")
+  endif()
+
+  message(WARNING "Disabling graphics")
   set(ENABLE_GRAPHICS FALSE)
 endif()
 
@@ -41,9 +44,9 @@ if(ENABLE_GRAPHICS)
   include_directories(${TGUI_INCLUDE_DIR})
   target_link_libraries(translator ${TGUI_LIBRARY})
 else()
-  message (WARNING "One or more graphical components were not found. Graphics will be disabled.")
   ADD_EXECUTABLE(translator src/translator_app.cpp src/PigLatinTranslator.cpp src/InverseTranslator.cpp)
 endif()
+
 SET_PROPERTY(TARGET translator PROPERTY CXX_STANDARD 11)
 TARGET_LINK_LIBRARIES(translator CLP ${CMAKE_THREAD_LIBS_INIT})
 target_compile_features(CLP PRIVATE cxx_range_for)
