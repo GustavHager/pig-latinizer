@@ -13,6 +13,9 @@ before_script:
     - cd build
     - cmake ..
 
+script:
+    - make
+
 compiler:
     - clang
     - gcc
