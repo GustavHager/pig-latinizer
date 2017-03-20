@@ -1,6 +1,11 @@
 language: c++
 install: ./install-dependencies.sh
-script: cmake
+
+before_script:
+    - mkdir build
+    - cd build
+    - cmake ..
+
 compiler:
-    -clang
-    -gcc
+    - clang
+    - gcc
