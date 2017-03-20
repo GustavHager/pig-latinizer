@@ -3,8 +3,10 @@ addons:
         packages:
             - cmake
             - cmake-data
+            - clang
         sources:
             - george-edison55-precise-backports
+            - ubuntu-toolchain-r-test
 
 language: c++
 
