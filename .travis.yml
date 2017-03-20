@@ -2,8 +2,9 @@ addons:
     apt:
         packages:
             - cmake
+            - cmake-data
         sources:
-            - kalakris-cmake
+            - george-edison55-precise-backports
 
 language: c++
 
