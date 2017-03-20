@@ -1,0 +1,6 @@
+language: c++
+install: ./install-dependencies.sh
+script: cmake
+compiler:
+    -clang
+    -gcc
