@@ -2,10 +2,12 @@
 For the software development phd-course. An application to turn proper english into pig-latin and the reverse.
   
 ## To download:
+``` bash
 git clone git@github.com:GustavHager/pig-latinizer.git
 cd pig-latinizer
 git submodule init
 git submodule update
+```
 
 ## Required libraries: SFML, TGUI
 * SFML: 2.3 or greater
